@@ -10,6 +10,8 @@ import { EventDetailsComponent } from './events/event-details/event-details.comp
 import { RouterModule } from '@angular/router';
 import { appRoutes } from './routes';
 import { CreateEventComponent } from './events/create-event/create-event.component';
+import { ErrorPageComponent } from './error-page/error-page.component';
+import { EventRouteActivator } from './events/router-activator/event-route-activator';
 
 @NgModule({
   declarations: [
@@ -18,16 +20,30 @@ import { CreateEventComponent } from './events/create-event/create-event.compone
     EventThumbnailComponent,
     NavComponent,
     EventDetailsComponent,
-    CreateEventComponent
+    CreateEventComponent,
+    ErrorPageComponent
   ],
   imports: [
-    BrowserModule, 
+    BrowserModule,
     RouterModule.forRoot(appRoutes)
   ],
   providers: [
     // services are added here
-    EventService
+    EventService,
+    EventRouteActivator,
+    {
+      provide: 'canDeactiveCreateEvent',
+      useValue: checkDirtyState
+    }
   ],
   bootstrap: [EventsAppComponent]
 })
 export class AppModule { }
+
+export function checkDirtyState(component: CreateEventComponent) {
+
+  if (component.isDirty) {
+    return window.confirm(' Are you sure you want to cancel');
+  }
+  return true;
+}

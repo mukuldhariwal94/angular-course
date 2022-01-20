@@ -21,7 +21,7 @@ import { EventRouteActivator } from './events/router-activator/event-route-activ
     NavComponent,
     EventDetailsComponent,
     CreateEventComponent,
-    ErrorPageComponent
+    ErrorPageComponent,
   ],
   imports: [
     BrowserModule,

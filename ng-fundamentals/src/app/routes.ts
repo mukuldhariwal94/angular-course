@@ -4,6 +4,7 @@ import { CreateEventComponent } from "./events/create-event/create-event.compone
 import { EventDetailsComponent } from "./events/event-details/event-details.component";
 import { EventsListComponent } from "./events/events-list/events-list.component";
 import { EventRouteActivator } from "./events/router-activator/event-route-activator";
+import { UserModule } from "./user/user.module";
 
 export const appRoutes: Routes = [
     { path: 'events/new', component: CreateEventComponent, canDeactivate : ["canDeactiveCreateEvent"]},
@@ -11,4 +12,8 @@ export const appRoutes: Routes = [
     { path: 'events/:id', component: EventDetailsComponent, canActivate : [EventRouteActivator] },
     { path: '404', component : ErrorPageComponent},
     { path: '', redirectTo: '/events', pathMatch: 'full' }, 
+    {
+        path : 'user',
+        loadChildren: () => import('./user/user.module').then(m => UserModule)
+    }
 ]
